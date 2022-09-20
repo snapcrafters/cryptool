@@ -22,10 +22,13 @@ description: |
   *Note: This Windows application runs on Linux using the Wine compatibility layer.*
 license: GPL-2.0-only
 icon: snap/gui/cryptool.svg
+issues: https://github.com/snapcrafters/cryptool/issues
+contact: https://github.com/snapcrafters/cryptool/issues
 
 grade: stable
 base: core18
 confinement: strict
+compression: lzo
 
 architectures:
   - build-on: amd64
