@@ -20,9 +20,10 @@ description: |
   - Comprehensive online help
 
   *Note: This Windows application runs on Linux using the Wine compatibility layer.*
-grade: stable
+license: GPL-2.0-only
 icon: snap/gui/cryptool.svg
 
+grade: stable
 base: core18
 confinement: strict
 
