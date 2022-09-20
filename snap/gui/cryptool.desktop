@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=CrypTool
+Categories=Education
+Exec=cryptool %F
+Icon=${SNAP}/meta/gui/cryptool.svg
+Terminal=false
+StartupNotify=true
+StartupWMClass=CrypTool.exe

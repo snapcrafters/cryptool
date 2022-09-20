@@ -1,0 +1,98 @@
+name: cryptool
+title: CrypTool
+version: "1.4.42"
+summary: CrypTool 1 is e-learning software for cryptography and cryptoanalysis.
+description: |
+  CrypTool 1 (CT1) is a free program for cryptography and cryptanalysis. CT1 is available in 6 languages, and it is the most widespread e-learning software of its kind.
+
+  CT1 supports both contemporary teaching methods at schools and universities as well as awareness training for employees and civil servants. The program can be downloaded here.
+
+  Originally designed as an internal business application for information security training, CrypTool 1 has since developed into an important open-source project in the field of cryptology and IT security awareness.
+
+  The current version of CrypTool 1 offers among other things:
+
+  - Numerous classic and modern cryptographic algorithms (encryption and decryption, key generation, secure passwords, authentication, secure protocols, etc.)
+  - Visualization of several algorithms (Caesar, Enigma, RSA, Diffie-Hellman, digital signatures, AES, etc.)
+  - Cryptanalysis of several algorithms (Vigenère, RSA, AES, etc.)
+  - Cryptanalytical measurement methods (entropy, n-grams, autocorrelation, etc.)
+  - Related auxiliary methods (primality tests, factorization, base64 encoding, etc.)
+  - Number theory tutorial
+  - Comprehensive online help
+
+  *Note: This Windows application runs on Linux using the Wine compatibility layer.*
+grade: stable
+icon: snap/gui/cryptool.svg
+
+base: core18
+confinement: strict
+
+architectures:
+  - build-on: amd64
+
+environment:
+  WINEDLLOVERRIDES: "$WINEDLLOVERRIDES;mscoree,mshtml="    # Prevent pop-ups about Wine Mono and Wine Gecko
+  SOMMELIER_STRICT: "1"                                    # Make Sommelier exit when unset variable is used. (useful to find bugs in sommelier)
+
+apps:
+  cryptool:
+    extensions: [ gnome-3-28 ]
+    command: bin/sommelier run-exe
+    environment:
+      RUN_EXE: "C:/Program Files (x86)/CrypTool/CrypTool.exe"
+      INSTALL_EXE: "$SNAP/SetupCrypTool_en.exe"
+      INSTALL_FLAGS: "/S"
+    plugs:
+      - home
+      - network
+      - network-bind
+      - removable-media
+      - cups-control
+      - cups
+  # The wine command can be used to run applications inside the wine
+  # environment that this snap uses.
+  #
+  # For example, users can configure the wine environment of this snap
+  # by running `myapp.wine winecfg`.
+  wine:
+    extensions: [ gnome-3-28 ]
+    command: bin/sommelier
+    plugs:
+      - home
+      - network
+      - network-bind
+      - removable-media
+      - cups-control
+      - cups
+  # The winetricks command can be used to run winetricks inside the wine
+  # environment that this snap uses.
+  winetricks:
+    extensions: [ gnome-3-28 ]
+    command: bin/sommelier winetricks
+    plugs:
+      - network
+
+parts:
+  installer:
+    plugin: nil
+    build-packages:
+      - curl
+    override-build: |
+      curl https://www.cryptool.org/ct1download/SetupCrypTool_1_4_42_en.exe --output "$SNAPCRAFT_PART_INSTALL/SetupCrypTool_en.exe"
+
+  # The sommelier script helps you snap Windows applications using Wine. It 
+  # initializes and configures Wine and installs the Windows application.
+  sommelier:
+    plugin: make
+    source: https://github.com/snapcrafters/sommelier-core.git
+    source-branch: "1.0"
+
+# These plugs are used to connect the snap to the wine runtime.
+plugs:
+  wine-runtime:
+    interface: content
+    target: $SNAP/wine-runtime
+    default-provider: wine-platform-runtime
+  wine-5-stable:
+    interface: content
+    target: $SNAP/wine-platform
+    default-provider: wine-platform-5-stable
