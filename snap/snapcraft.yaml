@@ -19,11 +19,22 @@ description: |
   - Number theory tutorial
   - Comprehensive online help
 
-  *Note: This Windows application runs on Linux using the Wine compatibility layer.*
+  **This snap uses Wine**
+
+  This snap contains a Windows application. It runs on Linux using the Wine compatibility layer. Some features may not work correctly due to the differences between Windows and Wine.
+
+  **Are you having issues?**
+
+  Let us know by creating a new issue here: https://github.com/snapcrafters/signal-desktop/issues
+
+  **Authors**
+
+  This snap is maintained by the Snapcrafters community, and is not necessarily endorsed or officially maintained by the upstream developers.
 license: GPL-2.0-only
 icon: snap/gui/cryptool.svg
 issues: https://github.com/snapcrafters/cryptool/issues
 contact: https://github.com/snapcrafters/cryptool/issues
+website: https://www.cryptool.org/en/ct1/
 
 grade: stable
 base: core18
